@@ -1,0 +1,197 @@
+ARQUITETURA DO SISTEMA DE GESTÃO DE PECUÁRIA FAMILIAR
+===================================================
+
+1. VISÃO GERAL DO SISTEMA
+------------------------
+Sistema destinado ao controle e organização da pecuária familiar,
+permitindo registrar criações, produção, gastos e resultados financeiros
+de forma simples e prática, auxiliando o produtor rural na tomada de decisão.
+
+Objetivos principais:
+- Controle do rebanho e criações
+- Registro da produção agropecuária
+- Controle de gastos e receitas
+- Acompanhamento de custos e resultados
+- Histórico de informações da propriedade
+
+
+2. MÓDULOS DO SISTEMA
+--------------------
+
+2.1 GESTÃO DE USUÁRIOS
+---------------------
+Responsável por controlar quem utiliza o sistema.
+
+Funcionalidades:
+- Cadastro de usuários
+- Definição de perfis de acesso
+- Controle de permissões (visualizar, cadastrar, editar, excluir)
+
+
+2.2 GESTÃO DA PROPRIEDADE RURAL
+-------------------------------
+Representa a fazenda, rancho ou sítio.
+
+Funcionalidades:
+- Cadastro da propriedade rural
+- Informações gerais da propriedade
+- Registro de custos fixos:
+  - Aluguel da fazenda/rancho
+  - Água
+  - Energia elétrica
+  - Outros gastos recorrentes
+
+
+2.3 GESTÃO DE ANIMAIS (CRIAÇÃO)
+------------------------------
+Controle de todos os animais da propriedade.
+
+Funcionalidades:
+- Cadastro de tipos de animais:
+  - Bois
+  - Vacas
+  - Bezerros
+  - Galinhas
+  - Galos
+  - Bodes
+  - Ovelhas
+  - Outros
+- Quantidade total por tipo de animal
+- Classificação por:
+  - Idade (adulto, jovem, filhote)
+  - Finalidade (corte, leite, reprodução, postura)
+- Registro de movimentações:
+  - Nascimento
+  - Compra
+  - Venda
+  - Morte
+
+
+2.4 GESTÃO DE PRODUÇÃO
+---------------------
+Controle da produção gerada pelos animais.
+
+Funcionalidades:
+- Registro de produção:
+  - Leite
+  - Ovos
+  - Carne
+  - Lã
+  - Outros produtos
+- Associação da produção ao tipo de animal
+- Registro por data ou período
+- Histórico de produção
+- Comparação de produção entre períodos
+
+
+2.5 GESTÃO DE ALIMENTAÇÃO
+------------------------
+Controle dos insumos utilizados na alimentação dos animais.
+
+Funcionalidades:
+- Cadastro de tipos de alimentação:
+  - Ração
+  - Milho
+  - Silagem
+  - Pasto
+  - Suplementos
+- Registro de compras de alimentação
+- Registro de consumo
+- Controle de gastos com alimentação
+- Associação da alimentação aos tipos de animais
+
+
+2.6 GESTÃO DE SAÚDE ANIMAL
+-------------------------
+Controle sanitário da criação.
+
+Funcionalidades:
+- Cadastro de vacinas e medicamentos
+- Registro de aplicações:
+  - Tipo de animal
+  - Quantidade aplicada
+  - Data da aplicação
+- Controle de gastos com vacinas e medicamentos
+- Histórico de saúde animal
+
+
+2.7 GESTÃO FINANCEIRA
+--------------------
+Controle financeiro simplificado da propriedade.
+
+Funcionalidades:
+- Registro de despesas:
+  - Alimentação
+  - Vacinas e medicamentos
+  - Água
+  - Luz e energia
+  - Aluguel
+  - Outros gastos
+- Registro de receitas:
+  - Venda de animais
+  - Venda de leite
+  - Venda de ovos
+  - Outros produtos
+- Classificação por categoria
+- Apuração de:
+  - Custos mensais
+  - Receitas mensais
+  - Resultado financeiro (lucro ou prejuízo)
+
+
+2.8 RELATÓRIOS E INDICADORES
+---------------------------
+Visualização das informações consolidadas.
+
+Funcionalidades:
+- Relatórios por período:
+  - Produção
+  - Gastos
+  - Receitas
+- Indicadores simples:
+  - Custo por animal
+  - Custo por litro de leite
+  - Produção média por animal
+- Comparativos mensais e anuais
+- Relatórios para visualização e impressão
+
+
+2.9 ALERTAS E LEMBRETES
+----------------------
+Auxílio no controle de prazos e atividades importantes.
+
+Funcionalidades:
+- Alertas de vacinação
+- Alertas de compra de alimentação
+- Lembretes de contas a pagar:
+  - Água
+  - Luz
+  - Aluguel
+- Avisos de gastos fora do padrão
+- Lembretes de registros pendentes
+
+
+3. ORGANIZAÇÃO LÓGICA DOS DADOS
+-------------------------------
+- Usuário vinculado à Propriedade
+- Propriedade contém Animais
+- Animais geram Produção
+- Animais consomem Alimentação
+- Animais possuem Histórico de Saúde
+- Propriedade possui Custos Fixos
+- Produção e Vendas geram Receita
+- Despesas e Receitas compõem o Resultado Financeiro
+
+
+4. PRINCÍPIOS DO SISTEMA
+-----------------------
+- Simplicidade de uso
+- Registros rápidos e objetivos
+- Linguagem acessível ao produtor rural
+- Foco em controle diário
+- Evitar burocracia excessiva
+- Adequado para pequenas e médias propriedades
+
+
+FIM DO DOCUMENTO
+================

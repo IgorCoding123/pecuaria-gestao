@@ -1,0 +1,78 @@
+<div class="animate__animated animate__fadeIn">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-gradient">Gestão Financeira</h2>
+        <a routerLink="/transacao-form" class="btn btn-primary btn-rounded shadow-sm">
+            <i class="fas fa-plus me-2"></i> Nova Transação
+        </a>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-md-4">
+            <div class="glass-card text-center py-3">
+                <h6 class="text-white-50 small">Total Receitas</h6>
+                <h3 class="text-success">{{ totalReceitas | currency:'BRL' }}</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="glass-card text-center py-3">
+                <h6 class="text-white-50 small">Total Despesas</h6>
+                <h3 class="text-danger">{{ totalDespesas | currency:'BRL' }}</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="glass-card text-center py-3">
+                <h6 class="text-white-50 small">Saldo</h6>
+                <h3 [ngClass]="saldo >= 0 ? 'text-info' : 'text-danger'">{{ saldo | currency:'BRL' }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <div class="table-responsive">
+            <table class="table table-hover text-white mb-0">
+                <thead>
+                    <tr class="text-white-50">
+                        <th>Data</th>
+                        <th>Descrição</th>
+                        <th>Categoria</th>
+                        <th>Tipo</th>
+                        <th>Valor</th>
+                        <th class="text-end">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (t of transacoes; track t.id) {
+                    <tr>
+                        <td>{{ t.data | date:'dd/MM/yyyy' }}</td>
+                        <td>{{ t.descricao }}</td>
+                        <td><span class="small text-white-50">{{ t.categoria }}</span></td>
+                        <td>
+                            <span class="badge" [ngClass]="t.tipo === 'RECEITA' ? 'badge-success' : 'badge-danger'">
+                                {{ t.tipo }}
+                            </span>
+                        </td>
+                        <td><strong [ngClass]="t.tipo === 'RECEITA' ? 'text-success' : 'text-danger'">
+                                {{ t.tipo === 'RECEITA' ? '+' : '-' }} {{ t.valor | currency:'BRL' }}
+                            </strong></td>
+                        <td class="text-end">
+                            <button [routerLink]="['/transacao-form', t.id]"
+                                class="btn btn-link btn-sm text-white me-2">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button (click)="deleteTransacao(t.id!)" class="btn btn-link btn-sm text-danger">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    } @empty {
+                    <tr>
+                        <td colspan="6" class="text-center py-5">
+                            <div class="text-white-50">Nenhuma transação financeira registrada.</div>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

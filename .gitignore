@@ -1,0 +1,30 @@
+# Java / Spring
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+backend/mvnw
+backend/mvnw.cmd
+backend/.settings/
+backend/.project
+backend/.classpath
+backend/.factorypath
+
+# Node / Angular
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+frontend/.vscode/
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.log
+
+# Database / OS
+*.db
+.DS_Store
+Thumbs.db
+
+# Sensitive files
+chavesmtp.txt
+limpar_banco.txt

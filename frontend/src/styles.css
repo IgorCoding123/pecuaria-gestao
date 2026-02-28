@@ -1,0 +1,90 @@
+:root {
+  --glass-bg: rgba(0, 0, 0, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  --primary-accent: #2ecc71;
+  --secondary-accent: #27ae60;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Outfit', 'Roboto', sans-serif;
+  background: url('/assets/bg.png') no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
+  color: #fff;
+}
+
+/* Glass Card Standard */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 15px;
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  padding: 24px;
+}
+
+.glass-navbar {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid var(--glass-border);
+}
+
+/* Inputs e Selects - FIX READABILITY */
+.form-control,
+.form-select {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 8px !important;
+}
+
+.form-control:focus,
+.form-select:focus {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  border-color: var(--primary-accent) !important;
+  box-shadow: 0 0 0 0.2rem rgba(46, 204, 113, 0.25) !important;
+}
+
+/* CRITICAL FIX: SELECT OPTIONS VISIBILITY */
+select option {
+  background-color: #2c3e50 !important;
+  /* Fundo escuro para as opções */
+  color: #ffffff !important;
+  /* Texto branco */
+}
+
+/* Labels e Textos */
+label {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  margin-bottom: 8px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.text-gradient {
+  background: linear-gradient(45deg, #fff, #2ecc71);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Table fixes */
+.table {
+  color: #fff !important;
+}
+
+.table thead th {
+  color: rgba(255, 255, 255, 0.6) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Badges */
+.badge {
+  padding: 0.5em 0.8em;
+  border-radius: 6px;
+}

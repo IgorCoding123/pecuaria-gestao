@@ -1,0 +1,68 @@
+.print-header {
+  display: none;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .print-header {
+    display: block !important;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #000;
+  }
+
+  .print-header h1 {
+    font-size: 22px;
+    color: #2c3e50;
+  }
+
+  .print-header p {
+    font-size: 12px;
+    color: #666;
+  }
+
+  body, html {
+    background: white !important;
+    color: #000 !important;
+  }
+
+  .glass-card {
+    background: #fff !important;
+    border: 1px solid #ddd !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    color: #000 !important;
+    page-break-inside: avoid;
+  }
+
+  .text-white, .text-white-50,
+  .table, .table th, .table td {
+    color: #000 !important;
+  }
+
+  .text-gradient {
+    background: none !important;
+    -webkit-text-fill-color: #2c3e50 !important;
+  }
+
+  .sidebar, .glass-navbar {
+    display: none !important;
+  }
+
+  .badge {
+    border: 1px solid #333 !important;
+    color: #000 !important;
+    background: #eee !important;
+  }
+
+  .bg-success { background: #d4edda !important; }
+  .bg-danger { background: #f8d7da !important; }
+  .text-success { color: #155724 !important; }
+  .text-danger { color: #721c24 !important; }
+  .text-info { color: #0c5460 !important; }
+  .text-warning { color: #856404 !important; }
+}

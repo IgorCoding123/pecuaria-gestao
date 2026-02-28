@@ -1,0 +1,76 @@
+<div class="animate__animated animate__fadeIn">
+    <div class="mb-4">
+        <a routerLink="/animais" class="text-white-50 text-decoration-none">
+            <i class="fas fa-arrow-left me-1"></i> Voltar para a lista
+        </a>
+        <h2 class="text-gradient mt-2">{{ isEdit ? 'Editar Animal' : 'Cadastrar Novo Animal' }}</h2>
+    </div>
+
+    <div class="glass-card max-width-800 mx-auto">
+        <form [formGroup]="animalForm" (ngSubmit)="onSubmit()">
+            <div class="row g-3">
+                <!-- Nome -->
+                <div class="col-md-6">
+                    <label class="form-label">Nome do Animal / Identificação</label>
+                    <input type="text" formControlName="nome" class="form-control btn-glass"
+                        placeholder="Ex: Mimosa, Brutus...">
+                </div>
+
+                <!-- Tipo -->
+                <div class="col-md-6">
+                    <label class="form-label">Tipo de Animal</label>
+                    <select formControlName="tipo" class="form-select btn-glass">
+                        <option value="Boi">Boi</option>
+                        <option value="Vaca">Vaca</option>
+                        <option value="Bezerro">Bezerro</option>
+                        <option value="Galinha">Galinha</option>
+                        <option value="Galo">Galo</option>
+                        <option value="Bode">Bode</option>
+                        <option value="Ovelha">Ovelha</option>
+                        <option value="Outro">Outro</option>
+                    </select>
+                </div>
+
+                <!-- Idade -->
+                <div class="col-md-4">
+                    <label class="form-label">Fase / Idade</label>
+                    <select formControlName="idade" class="form-select btn-glass">
+                        <option value="Adulto">Adulto</option>
+                        <option value="Jovem">Jovem</option>
+                        <option value="Filhote">Filhote</option>
+                    </select>
+                </div>
+
+                <!-- Finalidade -->
+                <div class="col-md-4">
+                    <label class="form-label">Finalidade</label>
+                    <select formControlName="finalidade" class="form-select btn-glass">
+                        <option value="Corte">Corte</option>
+                        <option value="Leite">Leite</option>
+                        <option value="Reprodução">Reprodução</option>
+                        <option value="Postura">Postura</option>
+                    </select>
+                </div>
+
+                <!-- Quantidade -->
+                <div class="col-md-4">
+                    <label class="form-label">Quantidade</label>
+                    <input type="number" formControlName="quantidade" class="form-control btn-glass">
+                </div>
+
+                <!-- Observações -->
+                <div class="col-12">
+                    <label class="form-label">Observações</label>
+                    <textarea formControlName="observacao" class="form-control btn-glass" rows="3"></textarea>
+                </div>
+
+                <div class="col-12 mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg w-100 shadow-sm"
+                        [disabled]="animalForm.invalid">
+                        <i class="fas fa-save me-2"></i> {{ isEdit ? 'Salvar Alterações' : 'Confirmar Cadastro' }}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

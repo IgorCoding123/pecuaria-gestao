@@ -1,0 +1,278 @@
+<div class="animate__animated animate__fadeIn" id="relatorio-content">
+    <div class="d-flex justify-content-between align-items-center mb-4 no-print">
+        <h2 class="text-gradient">Relatórios</h2>
+        <button (click)="imprimirRelatorio()" class="btn btn-primary btn-rounded shadow-sm">
+            <i class="fas fa-print me-2"></i> Imprimir / Salvar PDF
+        </button>
+    </div>
+
+    <!-- Header para impressão -->
+    <div class="print-header">
+        <h1>Relatório Gestão de Pecuária Familiar</h1>
+        <p>Data de geração: {{ dataAtual | date:'dd/MM/yyyy HH:mm' }}</p>
+        <hr>
+    </div>
+
+    @if (resumo) {
+
+    <!-- RESUMO GERAL -->
+    <h4 class="text-white mb-3"><i class="fas fa-chart-pie me-2"></i> Resumo Geral</h4>
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="glass-card text-center py-3">
+                <div class="text-white-50 small mb-1">Rebanho Total</div>
+                <h2 class="text-white mb-0">{{ resumo.totalQuantidadeAnimais }}</h2>
+                <small class="text-white-50">{{ resumo.totalAnimais }} registros</small>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="glass-card text-center py-3">
+                <div class="text-white-50 small mb-1">Registros de Produção</div>
+                <h2 class="text-info mb-0">{{ resumo.totalProducoes }}</h2>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="glass-card text-center py-3">
+                <div class="text-white-50 small mb-1">Saldo Financeiro</div>
+                <h2 [ngClass]="resumo.saldo >= 0 ? 'text-success' : 'text-danger'" class="mb-0">
+                    {{ resumo.saldo | currency:'BRL' }}
+                </h2>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="glass-card text-center py-3">
+                <div class="text-white-50 small mb-1">Registros de Saúde</div>
+                <h2 class="text-warning mb-0">{{ resumo.totalRegistrosSaude }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- ANIMAIS POR TIPO -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-6">
+            <div class="glass-card">
+                <h5 class="text-white mb-3"><i class="fas fa-cow me-2 text-success"></i> Animais por Tipo</h5>
+                <div class="table-responsive">
+                    <table class="table table-sm text-white mb-0">
+                        <thead>
+                            <tr class="text-white-50">
+                                <th>Tipo</th>
+                                <th class="text-end">Quantidade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (item of objectEntries(resumo.animaisPorTipo); track item[0]) {
+                            <tr>
+                                <td>{{ item[0] }}</td>
+                                <td class="text-end"><strong>{{ item[1] }}</strong></td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="glass-card">
+                <h5 class="text-white mb-3"><i class="fas fa-bullseye me-2 text-info"></i> Animais por Finalidade</h5>
+                <div class="table-responsive">
+                    <table class="table table-sm text-white mb-0">
+                        <thead>
+                            <tr class="text-white-50">
+                                <th>Finalidade</th>
+                                <th class="text-end">Quantidade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (item of objectEntries(resumo.animaisPorFinalidade); track item[0]) {
+                            <tr>
+                                <td>{{ item[0] }}</td>
+                                <td class="text-end"><strong>{{ item[1] }}</strong></td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRODUÇÃO POR TIPO -->
+    <div class="glass-card mb-4">
+        <h5 class="text-white mb-3"><i class="fas fa-chart-bar me-2 text-primary"></i> Produção por Tipo</h5>
+        <div class="row">
+            @for (item of objectEntries(resumo.producaoPorTipo); track item[0]) {
+            <div class="col-md-3 mb-2">
+                <div class="text-center p-3" style="background: rgba(255,255,255,0.05); border-radius: 10px;">
+                    <div class="text-white-50 small">{{ item[0] }}</div>
+                    <h4 class="text-white mb-0">{{ item[1] }}</h4>
+                </div>
+            </div>
+            }
+            @if (objectEntries(resumo.producaoPorTipo).length === 0) {
+            <div class="col-12 text-center text-white-50 py-3">Nenhum registro de produção.</div>
+            }
+        </div>
+    </div>
+
+    <!-- FINANCEIRO -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-6">
+            <div class="glass-card">
+                <h5 class="text-success mb-3"><i class="fas fa-arrow-up me-2"></i> Receitas por Categoria</h5>
+                <div class="table-responsive">
+                    <table class="table table-sm text-white mb-0">
+                        <thead>
+                            <tr class="text-white-50">
+                                <th>Categoria</th>
+                                <th class="text-end">Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (item of objectEntries(resumo.receitasPorCategoria); track item[0]) {
+                            <tr>
+                                <td>{{ item[0] }}</td>
+                                <td class="text-end text-success"><strong>{{ item[1] | currency:'BRL' }}</strong></td>
+                            </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr class="border-top">
+                                <td class="fw-bold">Total Receitas</td>
+                                <td class="text-end text-success fw-bold">{{ resumo.totalReceitas | currency:'BRL' }}
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="glass-card">
+                <h5 class="text-danger mb-3"><i class="fas fa-arrow-down me-2"></i> Despesas por Categoria</h5>
+                <div class="table-responsive">
+                    <table class="table table-sm text-white mb-0">
+                        <thead>
+                            <tr class="text-white-50">
+                                <th>Categoria</th>
+                                <th class="text-end">Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (item of objectEntries(resumo.despesasPorCategoria); track item[0]) {
+                            <tr>
+                                <td>{{ item[0] }}</td>
+                                <td class="text-end text-danger"><strong>{{ item[1] | currency:'BRL' }}</strong></td>
+                            </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr class="border-top">
+                                <td class="fw-bold">Total Despesas</td>
+                                <td class="text-end text-danger fw-bold">{{ resumo.totalDespesas | currency:'BRL' }}
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SAÚDE POR TIPO -->
+    <div class="glass-card mb-4">
+        <h5 class="text-white mb-3"><i class="fas fa-heartbeat me-2 text-danger"></i> Registros de Saúde por Tipo</h5>
+        <div class="row">
+            @for (item of objectEntries(resumo.saudePorTipo); track item[0]) {
+            <div class="col-md-3 mb-2">
+                <div class="text-center p-3" style="background: rgba(255,255,255,0.05); border-radius: 10px;">
+                    <div class="text-white-50 small">{{ item[0] }}</div>
+                    <h4 class="text-white mb-0">{{ item[1] }}</h4>
+                </div>
+            </div>
+            }
+            @if (objectEntries(resumo.saudePorTipo).length === 0) {
+            <div class="col-12 text-center text-white-50 py-3">Nenhum registro de saúde.</div>
+            }
+        </div>
+    </div>
+
+    <!-- LISTAGEM COMPLETA DE ANIMAIS -->
+    <div class="glass-card mb-4">
+        <h5 class="text-white mb-3"><i class="fas fa-list me-2"></i> Lista Completa de Animais</h5>
+        <div class="table-responsive">
+            <table class="table table-sm text-white mb-0">
+                <thead>
+                    <tr class="text-white-50">
+                        <th>#</th>
+                        <th>Nome</th>
+                        <th>Tipo</th>
+                        <th>Idade</th>
+                        <th>Finalidade</th>
+                        <th>Qtd</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (a of resumo.animais; track a.id; let i = $index) {
+                    <tr>
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ a.nome }}</td>
+                        <td>{{ a.tipo }}</td>
+                        <td>{{ a.idade }}</td>
+                        <td>{{ a.finalidade }}</td>
+                        <td>{{ a.quantidade }}</td>
+                    </tr>
+                    } @empty {
+                    <tr>
+                        <td colspan="6" class="text-center text-white-50">Nenhum animal cadastrado.</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- LISTAGEM COMPLETA DE TRANSAÇÕES -->
+    <div class="glass-card mb-4">
+        <h5 class="text-white mb-3"><i class="fas fa-receipt me-2"></i> Movimentações Financeiras</h5>
+        <div class="table-responsive">
+            <table class="table table-sm text-white mb-0">
+                <thead>
+                    <tr class="text-white-50">
+                        <th>#</th>
+                        <th>Data</th>
+                        <th>Descrição</th>
+                        <th>Categoria</th>
+                        <th>Tipo</th>
+                        <th class="text-end">Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (t of resumo.transacoes; track t.id; let i = $index) {
+                    <tr>
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ t.data | date:'dd/MM/yyyy' }}</td>
+                        <td>{{ t.descricao }}</td>
+                        <td>{{ t.categoria }}</td>
+                        <td><span class="badge" [ngClass]="t.tipo === 'RECEITA' ? 'bg-success' : 'bg-danger'">{{ t.tipo
+                                }}</span></td>
+                        <td class="text-end" [ngClass]="t.tipo === 'RECEITA' ? 'text-success' : 'text-danger'">{{
+                            t.valor | currency:'BRL' }}</td>
+                    </tr>
+                    } @empty {
+                    <tr>
+                        <td colspan="6" class="text-center text-white-50">Nenhuma transação registrada.</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    } @else {
+    <div class="glass-card text-center py-5">
+        <i class="fas fa-spinner fa-spin fa-3x text-white-50 mb-3"></i>
+        <p class="text-white-50">Carregando dados do relatório...</p>
+    </div>
+    }
+</div>

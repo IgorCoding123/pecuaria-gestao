@@ -1,0 +1,73 @@
+<div class="animate__animated animate__fadeIn">
+    <div class="mb-4">
+        <a routerLink="/producao" class="text-white-50 text-decoration-none">
+            <i class="fas fa-arrow-left me-1"></i> Voltar para a lista
+        </a>
+        <h2 class="text-gradient mt-2">{{ isEdit ? 'Editar Registro de Produção' : 'Novo Registro de Produção' }}</h2>
+    </div>
+
+    <div class="glass-card max-width-800 mx-auto">
+        <form [formGroup]="producaoForm" (ngSubmit)="onSubmit()">
+            <div class="row g-3">
+                <!-- Tipo de Produção -->
+                <div class="col-md-6">
+                    <label class="form-label">O que foi produzido?</label>
+                    <select formControlName="tipo" class="form-select btn-glass">
+                        <option value="Leite">Leite</option>
+                        <option value="Ovos">Ovos</option>
+                        <option value="Carne">Carne</option>
+                        <option value="Lã">Lã</option>
+                        <option value="Outro">Outro</option>
+                    </select>
+                </div>
+
+                <!-- Data -->
+                <div class="col-md-6">
+                    <label class="form-label">Data da Produção</label>
+                    <input type="date" formControlName="data" class="form-control btn-glass">
+                </div>
+
+                <!-- Quantidade -->
+                <div class="col-md-4">
+                    <label class="form-label">Quantidade</label>
+                    <input type="number" formControlName="quantidade" class="form-control btn-glass" step="0.1">
+                </div>
+
+                <!-- Unidade de Medida -->
+                <div class="col-md-4">
+                    <label class="form-label">Unidade</label>
+                    <select formControlName="unidadeMedida" class="form-select btn-glass">
+                        <option value="Litros">Litros</option>
+                        <option value="Kg">Kg</option>
+                        <option value="Unidades">Unidades</option>
+                        <option value="Pacotes">Pacotes</option>
+                    </select>
+                </div>
+
+                <!-- Animal Associado -->
+                <div class="col-md-4">
+                    <label class="form-label">Animal (Opcional)</label>
+                    <select formControlName="animal" class="form-select btn-glass">
+                        <option [ngValue]="null">Nenhum especificamente</option>
+                        @for (animal of animais; track animal.id) {
+                        <option [ngValue]="animal">{{ animal.nome }} ({{ animal.tipo }})</option>
+                        }
+                    </select>
+                </div>
+
+                <!-- Observações -->
+                <div class="col-12">
+                    <label class="form-label">Observações</label>
+                    <textarea formControlName="observacao" class="form-control btn-glass" rows="3"></textarea>
+                </div>
+
+                <div class="col-12 mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg w-100 shadow-sm"
+                        [disabled]="producaoForm.invalid">
+                        <i class="fas fa-save me-2"></i> {{ isEdit ? 'Salvar Alterações' : 'Registrar Produção' }}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

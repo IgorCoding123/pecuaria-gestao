@@ -1,0 +1,81 @@
+<div class="animate__animated animate__fadeIn">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="text-gradient">Saúde Animal</h2>
+    <a routerLink="/saude-form" class="btn btn-primary btn-rounded shadow-sm">
+      <i class="fas fa-plus me-2"></i> Novo Registro
+    </a>
+  </div>
+
+  <!-- Alertas de próximas doses -->
+  @if (alertas.length > 0) {
+  <div class="glass-card mb-4" style="border-left: 4px solid #e74c3c;">
+    <h6 class="text-warning mb-3"><i class="fas fa-exclamation-triangle me-2"></i> Próximas Doses / Reforços</h6>
+    @for (alerta of alertas; track alerta.id) {
+    <div class="d-flex justify-content-between align-items-center mb-2 px-2">
+      <span class="text-white">
+        <i class="fas fa-syringe me-2 text-info"></i>
+        <strong>{{ alerta.descricao }}</strong> — {{ alerta.animal?.nome || 'Rebanho geral' }}
+      </span>
+      <span class="badge bg-warning text-dark">{{ alerta.proximaDose | date:'dd/MM/yyyy' }}</span>
+    </div>
+    }
+  </div>
+  }
+
+  <div class="glass-card">
+    <div class="table-responsive">
+      <table class="table table-hover text-white mb-0">
+        <thead>
+          <tr class="text-white-50">
+            <th>Data</th>
+            <th>Tipo</th>
+            <th>Descrição</th>
+            <th>Animal</th>
+            <th>Veterinário</th>
+            <th>Próxima Dose</th>
+            <th class="text-end">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (r of registros; track r.id) {
+          <tr>
+            <td>{{ r.dataAplicacao | date:'dd/MM/yyyy' }}</td>
+            <td>
+              <span class="badge" [ngClass]="{
+                'bg-info': r.tipo === 'Vacina',
+                'bg-warning text-dark': r.tipo === 'Vermífugo',
+                'bg-danger': r.tipo === 'Medicamento',
+                'bg-secondary': r.tipo === 'Consulta Veterinária'
+              }">{{ r.tipo }}</span>
+            </td>
+            <td>{{ r.descricao }}</td>
+            <td>{{ r.animal ? r.animal.nome : 'Rebanho geral' }}</td>
+            <td>{{ r.veterinario || '—' }}</td>
+            <td>
+              @if (r.proximaDose) {
+                <span class="text-warning">{{ r.proximaDose | date:'dd/MM/yyyy' }}</span>
+              } @else {
+                <span class="text-white-50">—</span>
+              }
+            </td>
+            <td class="text-end">
+              <button [routerLink]="['/saude-form', r.id]" class="btn btn-link btn-sm text-white me-2">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button (click)="deleteRegistro(r.id!)" class="btn btn-link btn-sm text-danger">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+          } @empty {
+          <tr>
+            <td colspan="7" class="text-center py-5">
+              <div class="text-white-50">Nenhum registro de saúde cadastrado.</div>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,166 @@
+<div class="animate__animated animate__fadeIn">
+
+    <!-- LOGADO: Dashboard -->
+    @if (authService.isLoggedIn()) {
+    <div>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h1 class="text-gradient"><em>Bem-vindo, {{ authService.getUserNome() }}!</em></h1>
+                <p class="text-white-50">Dashboard de Gestão Pecuária Familiar</p>
+            </div>
+            <button (click)="logout()" class="btn btn-outline-danger btn-rounded">
+                <i class="fas fa-sign-out-alt me-2"></i> Sair
+            </button>
+        </div>
+
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <div class="glass-card text-center py-4">
+                    <i class="fas fa-cow fa-2x text-success mb-2"></i>
+                    <h6 class="text-white-50 small text-uppercase">Rebanho</h6>
+                    <small class="text-success">Acesse Animais no menu</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="glass-card text-center py-4">
+                    <i class="fas fa-tint fa-2x text-info mb-2"></i>
+                    <h6 class="text-white-50 small text-uppercase">Produção</h6>
+                    <small class="text-info">Acesse Produção no menu</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="glass-card text-center py-4">
+                    <i class="fas fa-coins fa-2x text-warning mb-2"></i>
+                    <h6 class="text-white-50 small text-uppercase">Financeiro</h6>
+                    <small class="text-warning">Acesse Financeiro no menu</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+
+    <!-- NÃO LOGADO -->
+    @if (!authService.isLoggedIn()) {
+    <div class="text-center mb-4">
+        <h1 class="text-gradient display-4"><em>Gestão Rural</em></h1>
+        <p class="text-white-50 fs-5">Sistema de Gestão de Pecuária Familiar</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="glass-card">
+
+                <!-- ERRO / SUCESSO -->
+                @if (errorMsg) {
+                <div class="alert alert-danger py-2 mb-3 animate__animated animate__shakeX">
+                    <i class="fas fa-exclamation-triangle me-1"></i> {{ errorMsg }}
+                </div>
+                }
+                @if (successMsg) {
+                <div class="alert alert-success py-2 mb-3">
+                    <i class="fas fa-check-circle me-1"></i> {{ successMsg }}
+                </div>
+                }
+
+                <!-- TABS -->
+                @if (activeTab !== 'verify') {
+                <div class="d-flex mb-4">
+                    <button (click)="activeTab = 'login'; errorMsg=''; successMsg=''" class="btn flex-fill me-2"
+                        [ngClass]="activeTab === 'login' ? 'btn-primary' : 'btn-outline-light'">
+                        <i class="fas fa-sign-in-alt me-1"></i> Entrar
+                    </button>
+                    <button (click)="activeTab = 'register'; errorMsg=''; successMsg=''" class="btn flex-fill"
+                        [ngClass]="activeTab === 'register' ? 'btn-success' : 'btn-outline-light'">
+                        <i class="fas fa-user-plus me-1"></i> Cadastrar
+                    </button>
+                </div>
+                }
+
+                <!-- LOGIN -->
+                @if (activeTab === 'login') {
+                <form (ngSubmit)="onLogin()">
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" [(ngModel)]="loginEmail" name="email" class="form-control btn-glass"
+                            placeholder="seu@email.com" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Senha</label>
+                        <input type="password" [(ngModel)]="loginSenha" name="senha" class="form-control btn-glass"
+                            placeholder="Sua senha" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg w-100 shadow-sm">
+                        <i class="fas fa-sign-in-alt me-2"></i> Entrar
+                    </button>
+                </form>
+                }
+
+                <!-- CADASTRO -->
+                @if (activeTab === 'register') {
+                <form (ngSubmit)="onRegister()">
+                    <div class="mb-3">
+                        <label class="form-label">Nome Completo *</label>
+                        <input type="text" [(ngModel)]="regNome" name="nome" class="form-control btn-glass"
+                            placeholder="Seu nome" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email *</label>
+                        <input type="email" [(ngModel)]="regEmail" name="email" class="form-control btn-glass"
+                            placeholder="seu@email.com" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Nome da Fazenda</label>
+                        <input type="text" [(ngModel)]="regNomeFazenda" name="nomeFazenda"
+                            class="form-control btn-glass" placeholder="Ex: Fazenda São José">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Senha * (mín. 6 caracteres)</label>
+                        <input type="password" [(ngModel)]="regSenha" name="senha" class="form-control btn-glass"
+                            placeholder="Crie uma senha" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Confirmar Senha *</label>
+                        <input type="password" [(ngModel)]="regSenhaConfirm" name="senhaConfirm"
+                            class="form-control btn-glass" placeholder="Repita a senha" required>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg w-100 shadow-sm">
+                        <i class="fas fa-user-plus me-2"></i> Criar Conta
+                    </button>
+                </form>
+                }
+
+                <!-- VERIFICAÇÃO DE EMAIL -->
+                @if (activeTab === 'verify') {
+                <div class="text-center mb-3">
+                    <i class="fas fa-envelope-open-text fa-3x text-info mb-3"></i>
+                    <h5 class="text-white">Verificação de Email</h5>
+                    <p class="text-white-50 small">Enviamos um código de 6 dígitos para<br><strong class="text-white">{{
+                            pendingEmail }}</strong></p>
+                </div>
+                <form (ngSubmit)="onVerify()">
+                    <div class="mb-3">
+                        <label class="form-label">Código de Verificação</label>
+                        <input type="text" [(ngModel)]="verifyCodigo" name="codigo"
+                            class="form-control btn-glass text-center fs-3" placeholder="000000" maxlength="6"
+                            style="letter-spacing: 10px;" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg w-100 shadow-sm mb-2">
+                        <i class="fas fa-check-circle me-2"></i> Verificar
+                    </button>
+                    <button type="button" (click)="onResendCode()" class="btn btn-outline-light btn-sm w-100">
+                        <i class="fas fa-redo me-1"></i> Reenviar Código
+                    </button>
+                    <div class="text-center mt-3">
+                        <a (click)="activeTab = 'login'; errorMsg=''; successMsg=''" class="text-white-50 small"
+                            style="cursor: pointer;">
+                            <i class="fas fa-arrow-left me-1"></i> Voltar para Login
+                        </a>
+                    </div>
+                </form>
+                }
+
+            </div>
+        </div>
+    </div>
+    }
+</div>

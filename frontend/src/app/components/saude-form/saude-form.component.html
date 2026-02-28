@@ -1,0 +1,75 @@
+<div class="animate__animated animate__fadeIn">
+    <div class="mb-4">
+        <a routerLink="/saude" class="text-white-50 text-decoration-none">
+            <i class="fas fa-arrow-left me-1"></i> Voltar para a lista
+        </a>
+        <h2 class="text-gradient mt-2">{{ isEdit ? 'Editar Registro de Saúde' : 'Novo Registro de Saúde' }}</h2>
+    </div>
+
+    <div class="glass-card max-width-800 mx-auto">
+        <form [formGroup]="saudeForm" (ngSubmit)="onSubmit()">
+            <div class="row g-3">
+                <!-- Tipo -->
+                <div class="col-md-6">
+                    <label class="form-label">Tipo de Procedimento</label>
+                    <select formControlName="tipo" class="form-select btn-glass">
+                        <option value="Vacina">Vacina</option>
+                        <option value="Medicamento">Medicamento</option>
+                        <option value="Vermífugo">Vermífugo</option>
+                        <option value="Consulta Veterinária">Consulta Veterinária</option>
+                    </select>
+                </div>
+
+                <!-- Descrição -->
+                <div class="col-md-6">
+                    <label class="form-label">Descrição (Nome da vacina/remédio)</label>
+                    <input type="text" formControlName="descricao" class="form-control btn-glass"
+                        placeholder="Ex: Febre Aftosa, Brucelose...">
+                </div>
+
+                <!-- Data de Aplicação -->
+                <div class="col-md-4">
+                    <label class="form-label">Data da Aplicação</label>
+                    <input type="date" formControlName="dataAplicacao" class="form-control btn-glass">
+                </div>
+
+                <!-- Próxima Dose -->
+                <div class="col-md-4">
+                    <label class="form-label">Próxima Dose (Reforço)</label>
+                    <input type="date" formControlName="proximaDose" class="form-control btn-glass">
+                </div>
+
+                <!-- Animal -->
+                <div class="col-md-4">
+                    <label class="form-label">Animal</label>
+                    <select formControlName="animal" class="form-select btn-glass">
+                        <option [ngValue]="null">Rebanho geral</option>
+                        @for (animal of animais; track animal.id) {
+                        <option [ngValue]="animal">{{ animal.nome }} ({{ animal.tipo }})</option>
+                        }
+                    </select>
+                </div>
+
+                <!-- Veterinário -->
+                <div class="col-md-6">
+                    <label class="form-label">Veterinário Responsável</label>
+                    <input type="text" formControlName="veterinario" class="form-control btn-glass"
+                        placeholder="Nome do veterinário (opcional)">
+                </div>
+
+                <!-- Observações -->
+                <div class="col-md-6">
+                    <label class="form-label">Observações</label>
+                    <textarea formControlName="observacao" class="form-control btn-glass" rows="2"></textarea>
+                </div>
+
+                <div class="col-12 mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg w-100 shadow-sm" [disabled]="saudeForm.invalid">
+                        <i class="fas fa-heartbeat me-2"></i> {{ isEdit ? 'Salvar Alterações' : 'Registrar Procedimento'
+                        }}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

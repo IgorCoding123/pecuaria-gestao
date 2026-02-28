@@ -1,0 +1,83 @@
+<div class="animate__animated animate__fadeIn">
+    <div class="mb-4">
+        <a routerLink="/financeiro" class="text-white-50 text-decoration-none">
+            <i class="fas fa-arrow-left me-1"></i> Voltar para o financeiro
+        </a>
+        <h2 class="text-gradient mt-2">{{ isEdit ? 'Editar Transação' : 'Nova Transação' }}</h2>
+    </div>
+
+    <div class="glass-card max-width-800 mx-auto">
+        <form [formGroup]="transacaoForm" (ngSubmit)="onSubmit()">
+            <div class="row g-3">
+                <!-- Descrição -->
+                <div class="col-12">
+                    <label class="form-label">Descrição da Transação</label>
+                    <input type="text" formControlName="descricao" class="form-control btn-glass"
+                        placeholder="Ex: Venda de 50 litros de leite, Compra de Milho...">
+                </div>
+
+                <!-- Valor -->
+                <div class="col-md-6">
+                    <label class="form-label">Valor (R$)</label>
+                    <input type="number" formControlName="valor" class="form-control btn-glass" step="0.01">
+                </div>
+
+                <!-- Tipo -->
+                <div class="col-md-6">
+                    <label class="form-label">Tipo</label>
+                    <div class="d-flex gap-3 mt-2">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" value="RECEITA" formControlName="tipo"
+                                id="tipoReceita">
+                            <label class="form-check-label text-success fw-bold" for="tipoReceita">Receita</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" value="DESPESA" formControlName="tipo"
+                                id="tipoDespesa">
+                            <label class="form-check-label text-danger fw-bold" for="tipoDespesa">Despesa</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Categoria -->
+                <div class="col-md-6">
+                    <label class="form-label">Categoria</label>
+                    <select formControlName="categoria" class="form-select btn-glass">
+                        @if (transacaoForm.get('tipo')?.value === 'RECEITA') {
+                        <option value="Venda de Animais">Venda de Animais</option>
+                        <option value="Venda de Leite">Venda de Leite</option>
+                        <option value="Venda de Ovos">Venda de Ovos</option>
+                        <option value="Outras Receitas">Outras Receitas</option>
+                        } @else {
+                        <option value="Alimentação">Alimentação</option>
+                        <option value="Vacinas/Saúde">Vacinas/Saúde</option>
+                        <option value="Água/Energia">Água/Energia</option>
+                        <option value="Aluguel/Manutenção">Aluguel/Manutenção</option>
+                        <option value="Outras Despesas">Outras Despesas</option>
+                        }
+                    </select>
+                </div>
+
+                <!-- Data -->
+                <div class="col-md-6">
+                    <label class="form-label">Data</label>
+                    <input type="date" formControlName="data" class="form-control btn-glass">
+                </div>
+
+                <!-- Observações -->
+                <div class="col-12">
+                    <label class="form-label">Observações</label>
+                    <textarea formControlName="observacao" class="form-control btn-glass" rows="2"></textarea>
+                </div>
+
+                <div class="col-12 mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg w-100 shadow-sm"
+                        [disabled]="transacaoForm.invalid">
+                        <i class="fas fa-check-circle me-2"></i> {{ isEdit ? 'Atualizar Transação' : 'Registrar
+                        Transação' }}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
